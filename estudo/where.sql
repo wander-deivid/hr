@@ -36,6 +36,7 @@ FROM departments
 WHERE department_name='Marketing';
 
 -------------------------------------------------------
+-- Comparadores
 
 SELECT department_id, department_name, manager_id, location_id
 FROM departments
@@ -54,6 +55,81 @@ FROM employees
 WHERE last_name LIKE 'M%'; 
 -- LIKE é um operador usado para procurar uma string ou conjunto de strings
 -- o "%" é utilizado para dizer que pode haver outros caracteres depois do preestabelecido
--- o "_" representa apenas um caractere (pelo que eu entendi, verificar!!!!!)
+-- o "_" representa apenas um caractere que pode ser 0,1,a,v, mas tem que ser apenas um caractere(pelo que eu entendi, verificar!!!!!)
 
+SELECT last_name, salary, department_id
+FROM employees
+WHERE last_name like '_i%';
 
+SELECT last_name, salary, department_id
+FROM employees
+WHERE last_name like '_in%';
+
+SELECT last_name, salary, department_id
+FROM employees
+WHERE last_name like '_il%';
+
+SELECT last_name, salary, department_id
+FROM employees
+WHERE last_name like '_is%';
+
+SELECT last_name, job_id, department_id
+FROM employees
+WHERE job_id like 'IT/%' ESCAPE '/'; -- Aqui ele identifica "%" como "%" e não como um conjunto de caracteres qualquer
+
+SELECT last_name, job_id, department_id
+FROM employees
+WHERE job_id like 'IT%';
+
+SELECT last_name, salary, commission_pct
+FROM employees
+WHERE commission_pct is null;
+
+-- A query to display the last name and salary of employees who earn more than
+-- $16,000. Save your SQL statement as a file cha_03_01.sql. Run your query.
+
+SELECT last_name, salary
+FROM employees
+WHERE salary >= 16000;
+
+-- display the last name and the salary for any employee whose salary is in 
+-- the range $11000 through $14,000
+
+SELECT last_name as "Sobrenome", salary as "Remuneração"
+FROM employees
+WHERE salary BETWEEN 11000 AND 14000;
+
+-- Display the last name and the salary of employees who earn a
+-- commission
+
+SELECT last_name as "Sobrenome", salary as "Remuneração", commission_pct as "Comissão"
+FROM employees
+WHERE commission_pct IS NOT null; -- Esse que funciona!
+
+SELECT last_name as "Sobrenome", salary as "Remuneração", commission_pct as "Comissão"
+FROM employees
+WHERE commission_pct NOT IN (null);
+
+-- Display the department name, manager ID and location ID of
+-- departments number 10, 20 and 50
+
+SELECT department_name, manager_id, location_id
+FROM departments
+WHERE department_id IN (10, 20, 50);
+
+-- Display the last name , department ID of any employee where the third
+-- letter of the name is “s.”
+
+SELECT last_name as "Sobrenome", department_id as "Departamento ID"
+FROM employees
+WHERE last_name LIKE '_' ||'_s%';
+
+SELECT last_name as "Sobrenome", department_id as "Departamento ID"
+FROM employees
+WHERE last_name LIKE '__s%';
+
+-- Operadores Lógicos
+SELECT last_name as "Sobrenome", job_id as "ID do Trabalho", salary as "Remuneração", department_id as "ID do Departamento"
+FROM employees
+WHERE department_id = 100
+AND salary >=7000; 
